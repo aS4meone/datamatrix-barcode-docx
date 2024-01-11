@@ -63,10 +63,10 @@ def create_datamatrix_doc_from_text(text_content):
             count = 0
 
             for code in codes:
-                if count == 1 or count == 5:
-                    spacer = " " * 8
-                else:
+                if count == 0 or count == 3 or count == 5 or count == 7:
                     spacer = " " * 9
+                else:
+                    spacer = " " * 10
 
                 codes_str += code[1:14] + spacer
                 count += 1
@@ -74,7 +74,7 @@ def create_datamatrix_doc_from_text(text_content):
             paragraph_codes = document.add_paragraph(codes_str)
             paragraph_codes.paragraph_format.space_after = Pt(0)
             paragraph_codes.alignment = WD_PARAGRAPH_ALIGNMENT.LEFT
-            set_font(paragraph_codes, 'Arial Narrow', 6)
+            set_font(paragraph_codes, 'Arial Narrow', 5)
 
             paragraph_barcodes = document.add_paragraph()
             paragraph_codes.paragraph_format.space_after = Pt(0)
@@ -83,7 +83,7 @@ def create_datamatrix_doc_from_text(text_content):
                 barcode_image_stream = create_barcode_image(code)
                 trimmed_barcode_image_stream = trim_whitespace(barcode_image_stream)
                 run = paragraph_barcodes.add_run()
-                run.add_picture(trimmed_barcode_image_stream, width=Cm(1.25), height=Cm(1.25))
+                run.add_picture(trimmed_barcode_image_stream, width=Cm(1), height=Cm(1))
                 run.add_text('     ')
 
         document.add_page_break()
